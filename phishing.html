@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Phishing URL Management</title>
+    <script>
+        async function fetchPhishingUrls() {
+            const response = await fetch('http://localhost:5001/phishing-urls');
+            const urls = await response.json();
+            let tableContent = "";
+            urls.forEach((url, index) => {
+                tableContent += `<tr>
+                    <td>${index + 1}</td>
+                    <td>${url.url}</td>
+                    <td>${url.status}</td>
+                    <td><button onclick="deleteUrl('${url._id}')">Delete</button></td>
+                </tr>`;
+            });
+            document.getElementById("urlTable").innerHTML = tableContent;
+        }
+
+        async function deleteUrl(id) {
+            await fetch(`http://localhost:5001/delete-phishing-url/${id}`, { method: "DELETE" });
+            fetchPhishingUrls();
+        }
+
+        window.onload = fetchPhishingUrls;
+    </script>
+</head>
+<body>
+    <h2>Phishing URL Management</h2>
+    <table border="1">
+        <tr>
+            <th>#</th>
+            <th>URL</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        <tbody id="urlTable"></tbody>
+    </table>
+</body>
+</html>
