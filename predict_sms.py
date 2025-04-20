@@ -1,6 +1,5 @@
 import sys
 import pickle
-import re
 sys.stdout.reconfigure(encoding='utf-8')  # Fix Unicode issues in Windows
 
 # ✅ Step 1: Load Model & Vectorizer
